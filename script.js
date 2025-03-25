@@ -1,49 +1,49 @@
-// Digitação (JS Completo)
-// controle do menu mobile
+// Controle menu hamburguer
 const menuIcon = document.querySelector('#menu-icon');
 const navList = document.querySelector('.navlist');
 
 menuIcon.addEventListener('click',() => {
     menuIcon.classList.toggle('bx-x');
     navList.classList.toggle('open');
-    
-    // Bloquear o scroll quando o menu estiver aberto
+
+    // Bloquear o scroll quando o menu hamburguer estiver aberto
     document.body.style.overflow = navList.classList.contains('open') ? 'hidden' : 'auto';
 });
 
 // Fechar menu ao clicar nos links
-document.querySelectorAll('.navlist a').forEach(link => { link.addEventListener('click', () => {
-    menuIcon.classList.remove('bx-x');
-    navList.classList.remove('open');
-    document.body.style.overflow = 'auto';
-
+document.querySelectorAll('.navlist a').forEach(link => {
+    link.addEventListener('click', () => {
+        menuIcon.classList.remove('bx-x');
+        navList.classList.remove('open');
+        document.body.style.overflow = 'auto';
     });
 });
 
 // Fechar ao rolar a página
-window.addEventListener('scroll', () =>{
-    if(navList.classList.contains('open')) {
+window.addEventListener('scroll', () => {
+    if(navList.classList.contains('open')){
         menuIcon.classList.remove('bx-x');
         navList.classList.remove('open');
         document.body.style.overflow = 'auto';
     }
 });
 
-//  ===== Navegação ativa =====
+// ====== Navegação ativa ======
 // Seleciona todos os links de navegação
-const navLinks = document.querySelectorAll('.navlist a');
+const navLinks = document.querySelectorAll('.navlist a')
 
 // Função para adicionar a classe 'active' no link clicado
 function activeLink(){
-    navLinks.forEach(item => item.classList.remove('active'));
+    navLinks.forEach(item => item.classList.remove('active'))
     this.classList.add('active');
 }
 
-// adiciona o evento de click no link de navegação
+// Adiciona um evento de clique no link de navegação
+
 navLinks.forEach(item => item.addEventListener('click', activeLink));
 
-// ===== Alterar Modo claro / modo escuro =====
-// Função para alterar entre os temas
+// Alternar modo claro/escuro
+// Função para alternar entre os temas
 function toggleMode(){
     const html = document.documentElement;
     html.classList.toggle('light');
@@ -63,86 +63,88 @@ function updateTextColor(){
     titleElement.style.color = currentColor;
 }
 
-
+// carrega o tema salvo no LocalStorage
 const savedTheme = localStorage.getItem('theme');
-if(savedTheme){
+if (savedTheme){
     document.documentElement.classList.toggle('light', savedTheme === 'light');
 }
 
-// ===== Animação do titulo principal =====
-// Seleciona o elemento 'titulo' e define as variaveis para animar
-const titleElement = document.querySelector('#name');
+// ==== Animação do titulo principal
+// Seleciona o elemento 'titulo' e define as variaveis para animação
+const titleElement = document.querySelector('#name'); 
 const text = "Gabriel";
 let index = 0;
 let isTyping = true;
-let currentColor = document.documentElement.classList.contains('light') ? 'black' : '#fff'
+let currentColor =  document.documentElement.classList.contains('light') ? 'black' : '#fff';
 
-// função para animar o texto (digitando e apagando)
+// Função para animar o texto(digitando e apagando)
 function animateText(){
     if(isTyping){
         if(index < text.length){
             titleElement.textContent = text.slice(0, index + 1);
             index ++;
-        }else{
+        }else {
             isTyping = false;
         }
-    }else{
+    
+    } else{
         if(index > 1){
             titleElement.textContent = text.slice(0, index -1);
             index --;
         }else{
             isTyping = true;
-            // altera a cor entre preto e laranja
-            currentColor = currentColor === (document.documentElement.classList.contains('light') ? 'black' : '#fff') ? '#c94c16' : (document.documentElement.classList.contains('light') ? 'black' : '#fff');
+            // Alterna a cor entre preto e laranja
+            currentColor = currentColor == (document.documentElement.classList.contains('light') ? 'black' : '#fff') ? '#c94c16' : (document.documentElement.classList.contains('light') ? 'black' : '#fff');
             titleElement.style.color = currentColor;
-         }
+        }
     }
-    setTimeout(animateText, 150);
+
+    setTimeout(animateText, 300);
 }
 
-// inicia a animação quando carregar a página
+// Inicia a animação quando carrega a pagina
 document.addEventListener('DOMContentLoaded', animateText);
 updateTextColor();
 
-// ===== animação da sessão home =====
+// ================= ANIMAÇÃO DA SEÇÃO HOME 
 // Seleciona a seção home e aplica uma animação de fade-in
 const homeSection = document.querySelector('#home');
 homeSection.style.opacity = '0';
-homeSection.style.transform= 'translateY(20px)';
+homeSection.style.transform = 'translateY(200px)';
 homeSection.style.transition = 'opacity 1s ease, transform 1s ease';
 
 setTimeout(() => {
-    homeSection.style.opacity = '1';
-    homeSection.style.transform = 'translate(0)';
+  homeSection.style.opacity = '1';
+  homeSection.style.transform = 'translateY(0)';
 }, 100);
 
-// ===== ANIMAÇÃO DA SEÇÕES =====
-// Seleciona todas as seções e aplica animações de entrada
-const sections = document.querySelectorAll('section');
+// ANIMAÇÃO DAS SEÇÕES
+// Seleciona as animações e aplica fade-in ao atualizar
+const sections = document.querySelectorAll ('section');
 
 sections.forEach((section, index) => {
     section.style.opacity = '0';
     section.style.transition = 'opacity 1s, transform 1s';
 
-    // aplica diferentes transformações com base mo indice da seção
-    if(index !== 0){
+    // Aplica diferente transformações de acordo com  o índice da seção
+    if (index !== 0){
         if(index === 1) section.style.transform = 'translateY(100px)';
-        else if(index === 2) section.style.transform = 'scale(0.8)';
-        else if(index === 3) section.style.transform = 'rotateY(90deg)';
+        else if (index === 2) section.style.transform = 'scale(0.8)';
+        else if (index === 3) section.style.transform = 'rotateY(90deg)';
     }
 });
 
-// observer para animar a seções ao rolar a página
+// Observer para animar as seções ao rolar a página
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if(entry.isIntersecting){
+        if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
-            entry.target.style.transform = 'nome';
+            entry.target.style.transform = 'none';
         }
     });
 });
 
-// observa cada seção para aplicar a animação
+// Observa cada seção para aplicar a animação
 sections.forEach((section) => observer.observe(section));
 
 // ===== BOTÃO DE VOLTAR AO TOPO =====
@@ -238,7 +240,7 @@ const contactForm = document.getElementById('contactForm');
 const thankYouMessage = document.getElementById('thankYouMessage');
 
 // adciona um evento de envio ao formulário
-contactForm.addEventListener('submit', (e) => {
+contactForm.addEventListener('submir', (e) => {
     e.preventDefault();
     thankYouMessage.style.display = 'block'; //exibe a mensagem de agradecimento
 
@@ -263,20 +265,20 @@ contactForm.addEventListener('submit', (e) => {
 // Seleciona a seção "Sobre mim"
 const aboutSection = document.querySelector('.about');
 
-// Função para verificar se a seção está visível na tela
+// Função para verificar se a seção está visivel na tela
 function checkAboutVisibility() {
     const rect = aboutSection.getBoundingClientRect();
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const windowHeight = window.windowHeight || document.documentElement.clientHeight;
 
-    // Verifica se a seção está dentro da área visivel da tela
-    if(ReadableByteStreamController.top <= windowHeight * 0,75 && rect.bottom >= 0) {
-        aboutSection.classList.add('visible'); // Adiciona a classe "visible"
-        window.removeEventListener('scroll', checkAboutVisibility); // Remove o listener após a animação
+    // Verificar se a seção está dentro da área visivel da tela
+    if (rect.top <= windowHeight * 0.75 && rect.bottom >= 0) {
+        aboutSection.classList.add('visible'); //Adiciona a classe "visivel"
+        window.removeEventListener('scroll', checkAboutVisibility); //Remove o listener após a animação
     }
 }
 
-// adiciona um listener para o evento de scroll
+// Adiciona um listener para o evento de scroll
 window.addEventListener('scroll', checkAboutVisibility);
 
-// Verifica a visibilidade ao carregar a p´gina (caso a seção já esteja visível)
-checkAboutVisibility()
+// Verificar a visibilidade ao carregar a pagina (caso a seção jaesteja visivel)
+checkAboutVisibility();
