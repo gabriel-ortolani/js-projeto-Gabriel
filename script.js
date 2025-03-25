@@ -126,7 +126,7 @@ sections.forEach((section, index) => {
 
     // aplica diferentes transformações com base mo indice da seção
     if(index !== 0){
-        if(index === 1) section.style.transform = 'transleteY(100px)';
+        if(index === 1) section.style.transform = 'translateY(100px)';
         else if(index === 2) section.style.transform = 'scale(0.8)';
         else if(index === 3) section.style.transform = 'rotateY(90deg)';
     }
@@ -142,7 +142,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 });
 
-// observa cada seção para aplicar  animação
+// observa cada seção para aplicar a animação
 sections.forEach((section) => observer.observe(section));
 
 // ===== BOTÃO DE VOLTAR AO TOPO =====
@@ -162,4 +162,103 @@ let currentSlide = 0;
 let autoSlideInterval;
 
 // Função para exibir o slide atual
-function show
+function showSlide(slideIndex){
+    slides.forEach(slide => {
+        slide.classList.remove('active');
+        slide.style.display = 'none';
+    });
+
+    // Ajusta o índice do slide para garantir que ele esteja dentro dos limites
+    if(slideIndex <0) currentSlide = slides.length - 1;
+    else if (slideIndex >= slides.length) currentSlide = 0;
+    else currentSlide = slideIndex;
+
+    // exibe o slide atual
+    slides[currentSlide].classList.add('active');
+    slides[currentSlide].style.display = 'flex';
+    updateSlidePosition();
+}
+
+// Função para atualizar a posição do carrosel
+function updateSlidePosition(){
+    const slideWidth = slides[0].offsetWidth;
+    carouselSlides.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+}
+
+// Função para avançar para o próximo slide
+function nextSlide() {
+    showSlide(currentSlide + 1);
+    resetAutoSlide(); // Reinicia o intervalo de transição automática
+}
+
+// Função para voltar ao slide anterior
+function prevSlide(){
+    showSlide(currentSlide - 1);
+    resetAutoSlide(); // Reinicia o intervalo de transição automática
+}
+
+// Função para iniciar a transição automática dos slides
+function startAutoSlide(){
+    autoSlideInterval = setInterval(nextSlide, 5000); //Avança o slide a cada 5 segundos
+}
+
+// Função para reiniciar a transição automática
+function resetAutoSlide(){
+    clearInterval(autoSlideInterval);
+    startAutoSlide();
+}
+
+// Adiciona evento de clique aos botões de navegação do carrosel
+nextButton.addEventListener('click', nextSlide);
+prevButton.addEventListener('click', prevSlide);
+
+// Inicaliza o carrosel ao carregar a página
+window.addEventListener('load', () => {
+    showSlide(currentSlide);
+    startAutoSlide();
+
+    // Atualiza a posição do carrosel ao redimensionar a janela
+    window.addEventListener('resize', () => {
+        updateSlidePosition();
+    });
+});
+
+// Pausa a transição automática ao passar o mouse sobre o carrosel
+carouselSlides.parentElement.addEventListener('mouseenter', () =>{
+    clearInterval(autoSlideInterval);
+});
+
+// Retoma a transição automática ao remover o mouse do carrossel
+carouselSlides.parentElement.addEventListener('mouseleave', startAutoSlide);
+
+// 8
+// ===== Formulario de contato =====
+// Seleciona o formulário de contato e a mensagem de agradecimento
+const contactForm = document.getElementById('contactForm');
+const thankYouMessage = document.getElementById('thankYouMessage');
+
+// adciona um evento de envio ao formulário
+contactForm.addEventListener('submir', (e) => {
+    e.preventDefault();
+    thankYouMessage.style.display = 'block'; //exibe a mensagem de agradecimento
+
+    // envia os dados do formulário usando Fetch API
+    const formData = new FormData(contactForm);
+    fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json'}
+    })
+    .then(response => {
+        if(response.ok){
+            setTimeout(() => window.location.reload(), 2000); // Recarrega a  página após 2 segundos
+        } else{
+            alert('Eroo ao enviar formulário. Tente novamente.');
+        }
+    })
+    .catch(() => alert('Erro na conexão, Tente novamente.'));
+});
+
+// ===== ANIMAÇÃO DA SEÇÃO "SOBRE MIM" =====
+// Seleciona a seção "Sobre mim"
+// const aboutSection = document.querySelector('.about')
