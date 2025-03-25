@@ -79,7 +79,6 @@ body {
   background: var(--bg-color);
   color: var(--text-color);
   font-family: var(--first-font);
-  overflow-x: hidden;
 }
 
 /* ------------------- nav ------------------- */
