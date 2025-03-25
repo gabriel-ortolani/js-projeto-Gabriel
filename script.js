@@ -151,3 +151,15 @@ document.querySelector('.top a').addEventListener('click', (e) =>{
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth'}); // Rola suavemente para o topo da página 
 });
+
+// ====== CARROSSEL DE PROJETOS =====
+//seleciona os elementos do carrosel
+const carouselSlides = document.querySelector('.carousel-slides');
+const slides = document.querySelectorAll('.carousel-slide');
+const prevButton = document.querySelector('.carousel-button.prev');
+const nextButton = document.querySelector('.carousel-button.next');
+let currentSlide = 0;
+let autoSlideInterval;
+
+// Função para exibir o slide atual
+function show
