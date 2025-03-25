@@ -238,7 +238,7 @@ const contactForm = document.getElementById('contactForm');
 const thankYouMessage = document.getElementById('thankYouMessage');
 
 // adciona um evento de envio ao formulário
-contactForm.addEventListener('submir', (e) => {
+contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     thankYouMessage.style.display = 'block'; //exibe a mensagem de agradecimento
 
