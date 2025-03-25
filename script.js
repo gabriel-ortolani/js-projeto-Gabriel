@@ -48,16 +48,60 @@ function toggleMode(){
     const html = document.documentElement;
     html.classList.toggle('light');
 
-    // salva o tema escolhido no localStorege
+
+    // Salva o tema escolhido no "Armazenamento Local (LocalStorage)"
     const mode = html.classList.contains('light') ? 'light' : 'dark';
     localStorage.setItem('theme', mode);
 
-    // Alterar apaência do título
+    // Alterar aparência do título
     updateTextColor();
 }
 
 // Função que altera a cor do texto de acordo com o tema
 function updateTextColor(){
-    currentColor = document.document.classList.contains('light') ? 'black' : '#fff';
+    currentColor = document.documentElement.classList.contains('light') ? 'black' : '#fff';
     titleElement.style.color = currentColor;
 }
+
+
+const savedTheme = localStorage.getItem('theme');
+if(savedTheme){
+    document.documentElement.classList.toggle('light', savedTheme === 'light');
+}
+
+// ===== Animação do titulo principal =====
+// Seleciona o elemento 'titulo' e define as variaveis para animar
+const titleElement = document.querySelector('#name');
+const text = "Gabriel Ortolani";
+let index = 0;
+let isTyping = true;
+let currentColor = document.documentElement.classList.contains('light') ? 'black' : '#fff'
+
+// função para animar o texto (digitando e apagando)
+function animateText(){
+    if(isTyping){
+        if(index < text.length){
+            titleElement.textContent = text.slice(0, index + 1);
+            index ++;
+        }else{
+            isTyping = false;
+        }
+    }else{
+        if(index > 1){
+            titleElement.textContent = text.slice(0, index -1);
+            index --;
+        }else{
+            isTyping = true;
+            // altera a cor entre preto e laranja
+            currentColor = currentColor === (document.documentElement.classList.contains('light') ? 'black' : '#fff') ? '#c94c16' : (document.documentElement.classList.contains('light') ? 'black' : '#fff');
+            titleElement.style.color = currentColor;
+         }
+    }
+    setTimeout(animateText, 150);
+}
+
+// inicia a animação quando carregar a página
+document.addEventListener('DOMContentLoaded', animateText);
+updateTextColor();
+
+
