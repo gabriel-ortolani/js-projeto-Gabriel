@@ -442,7 +442,7 @@ img.balls {
 }
 
 .line {
-  border: 2px #FF4D00 solid;
+  border: 2px #79A2F2 solid;
   width: 17rem;
   margin-bottom: 1rem;
 }
@@ -498,7 +498,7 @@ img.balls {
 
 .card:hover {
   cursor: pointer;
-  background-color: #FF4D00;
+  background-color: #4E7DA6;
   transform: translateY(-10px);
 }
 

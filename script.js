@@ -94,12 +94,12 @@ function animateText(){
         }else{
             isTyping = true;
             // Alterna a cor entre preto e laranja
-            currentColor = currentColor == (document.documentElement.classList.contains('light') ? 'black' : '#fff') ? '#c94c16' : (document.documentElement.classList.contains('light') ? 'black' : '#fff');
+            currentColor = currentColor == (document.documentElement.classList.contains('light') ? 'black' : '#fff') ? '#5E83F2' : (document.documentElement.classList.contains('light') ? 'black' : '#fff');
             titleElement.style.color = currentColor;
         }
     }
 
-    setTimeout(animateText, 300);
+    setTimeout(animateText, 150);
 }
 
 // Inicia a animação quando carrega a pagina
